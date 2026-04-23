@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dallas Hamburguesería | Posadas</title>
     <link rel="icon" href="assets/logo.png" type="image/png">
-    
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Montserrat:wght@400;600;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -35,42 +34,14 @@
             <ul id="lista-carrito" class="cart-list"></ul>
         </div>
 
-        <div class="cart-footer">
-            <div class="cart-checkout-scroll">
-                <div class="cart-options">
-                    <div class="form-group">
-                        <label for="metodo-pago">Método de pago:</label>
-                        <select id="metodo-pago">
-                            <option value="Efectivo">Efectivo</option>
-                            <option value="Transferencia">Transferencia / Mercado Pago</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="metodo-entrega">Entrega:</label>
-                        <select id="metodo-entrega" onchange="toggleDireccion()">
-                            <option value="Delivery">Delivery (25-50 min)</option>
-                            <option value="Retiro por local">Para llevar / Retiro en local</option>
-                        </select>
-                    </div>
-                    <div class="form-group" id="grupo-direccion">
-                        <label for="direccion-envio">Dirección de envío:</label>
-                        <input type="text" id="direccion-envio" placeholder="Ej: Av. Tambor de Tacuarí 3826">
-                    </div>
-                </div>
-
-                <div class="cart-notes">
-                    <label for="pedido-notas">Aclaraciones adicionales:</label>
-                    <textarea id="pedido-notas" placeholder="Ej: Sin pepinillos, sin tomate..."></textarea>
-                </div>
+        <div class="cart-footer-fixed">
+            <div class="cart-total-box">
+                <span>TOTAL</span>
+                <span id="precio-total">$0</span>
             </div>
-            
-            <div class="cart-checkout-fixed">
-                <div class="cart-total-box">
-                    <span>Total:</span>
-                    <span id="precio-total">$0</span>
-                </div>
-                <button id="btn-whatsapp" class="btn-whatsapp" disabled>Enviar Pedido a WhatsApp</button>
-            </div>
+            <button id="btn-confirmar-pedido" class="btn-confirmar" disabled>
+                CONFIRMAR PEDIDO <i class="fa-solid fa-arrow-right"></i>
+            </button>
         </div>
     </aside>
 
@@ -109,7 +80,6 @@
     </div>
 
     <div id="notificacion" class="toast-notification">¡Agregado al pedido!</div>
-    
     <script src="app.js"></script>
 </body>
 </html>

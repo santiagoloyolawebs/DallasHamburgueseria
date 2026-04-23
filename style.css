@@ -200,38 +200,33 @@ body {
 .footer-bottom { max-width: 1200px; margin: 40px auto 0; padding-top: 20px; border-top: 1px solid var(--gris-medio); text-align: center; }
 .btn-instagram { color: var(--blanco); text-decoration: none; font-size: 2rem; transition: 0.3s; }
 .btn-instagram:hover { color: var(--primario); }
-.copy { margin-top: 15px; font-size: 0.85rem; color: #777; }
 
 
 /* =========================================================================
-   CARRITO SIDEBAR - DISEÑO DIVIDIDO (PANTALLA PC)
+   NUEVO DISEÑO DE CARRITO (UNA COLUMNA, FOOTER FIJO)
    ========================================================================= */
 
 .cart-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 1001; opacity: 0; visibility: hidden; transition: 0.3s; }
 .cart-overlay.active { opacity: 1; visibility: visible; }
 
-/* En PC usamos GRID: 1 fracción para la lista (izquierda) y 400px fijos para el checkout (derecha) */
 .cart-sidebar { 
     position: fixed; 
     top: 0; 
     right: -100%; 
-    width: 100%; 
+    width: 450px; 
     max-width: 100%; 
-    height: 100vh;
-    height: 100dvh; /* Soporte móvil avanzado */
+    height: 100%; 
     background: var(--negro-suave); 
     z-index: 1002; 
-    display: grid; 
-    grid-template-columns: 1fr 400px; 
-    grid-template-rows: auto 1fr;
+    display: flex; 
+    flex-direction: column;
     transition: right 0.4s ease; 
 }
 .cart-sidebar.active { right: 0; }
 
-/* El Header ocupa todo el ancho superior */
+/* HEADER */
 .cart-header { 
-    grid-column: 1 / -1;
-    padding: 20px 40px; 
+    padding: 25px; 
     background: var(--negro-puro); 
     border-bottom: 1px solid var(--gris-medio); 
     display: flex; 
@@ -242,137 +237,79 @@ body {
 .close-cart-btn { background: none; border: none; color: var(--blanco); font-size: 1.5rem; cursor: pointer; transition: 0.3s; }
 .close-cart-btn:hover { color: var(--primario); }
 
-/* Scrollbars personalizados para el carrito */
-.cart-body::-webkit-scrollbar, .cart-checkout-scroll::-webkit-scrollbar { width: 6px; }
-.cart-body::-webkit-scrollbar-thumb, .cart-checkout-scroll::-webkit-scrollbar-thumb { background: var(--primario); border-radius: 10px; }
-
-/* Lado Izquierdo: Lista de Pedidos */
+/* BODY (LISTA SCROLLEABLE) */
 .cart-body { 
-    grid-column: 1 / 2;
+    flex: 1; 
     overflow-y: auto; 
     padding: 30px; 
 }
-.cart-list { list-style: none; max-width: 900px; margin: 0 auto; width: 100%; }
-.cart-item { display: flex; justify-content: space-between; align-items: center; background: var(--gris-oscuro); padding: 15px 20px; margin-bottom: 12px; border-radius: 8px; border: 1px solid var(--gris-medio); }
-.item-details h4 { font-size: 1.05rem; color: var(--blanco); margin-bottom: 5px; }
-.item-details p { color: var(--primario); font-weight: bold; font-size: 0.95rem; }
-.btn-remove { background: none; border: none; color: #ff4444; font-size: 1.2rem; cursor: pointer; transition: 0.2s; }
+.cart-list { list-style: none; width: 100%; }
+.cart-item { display: flex; justify-content: space-between; align-items: center; background: var(--gris-oscuro); padding: 15px 25px; margin-bottom: 15px; border-radius: 8px; border: 1px solid var(--gris-medio); }
+.item-details h4 { font-size: 1.1rem; color: var(--blanco); margin-bottom: 5px; }
+.item-details p { color: var(--primario); font-weight: bold; font-size: 1rem; }
+.btn-remove { background: none; border: none; color: #ff4444; font-size: 1.3rem; cursor: pointer; transition: 0.2s; }
 .btn-remove:hover { transform: scale(1.1); }
-.empty-msg { text-align: center; color: var(--gris-texto); font-style: italic; margin-top: 40px; font-size: 1.1rem; }
+.empty-msg { text-align: center; color: var(--gris-texto); font-style: italic; margin-top: 40px; font-size: 1.2rem; }
 
-/* Lado Derecho: Opciones y Checkout */
-.cart-footer { 
-    grid-column: 2 / 3;
-    padding: 25px 20px; 
-    background: var(--negro-puro); 
-    border-left: 1px solid var(--gris-medio); 
-    display: flex;
-    flex-direction: column;
-    overflow: hidden; /* Ocultamos el desborde principal */
+/* FOOTER FIJO (TOTAL Y BOTÓN) */
+.cart-footer-fixed {
+    background: var(--negro-puro);
+    padding: 25px 30px 30px;
+    border-top: 2px solid var(--primario);
+    box-shadow: 0 -10px 20px rgba(0,0,0,0.5);
+    z-index: 10;
 }
-
-/* El área de opciones hace scroll interno */
-.cart-checkout-scroll {
-    overflow-y: auto;
-    flex-grow: 1;
-    padding-right: 10px;
-    margin-bottom: 15px;
-}
-
-.cart-options, .cart-notes { width: 100%; }
-.form-group { margin-bottom: 15px; }
-.form-group label, .cart-notes label { display: block; font-size: 0.85rem; margin-bottom: 5px; color: var(--gris-texto); font-weight: bold; }
-.form-group select, .form-group input, .cart-notes textarea { width: 100%; padding: 10px; background: var(--gris-oscuro); border: 1px solid var(--gris-medio); color: var(--blanco); border-radius: 5px; font-family: inherit; font-size: 0.9rem; }
-.cart-notes textarea { resize: vertical; min-height: 60px; width: 100%; }
-
-/* Área fija inferior (Total y Botón) */
-.cart-checkout-fixed {
-    flex-shrink: 0;
-    padding-top: 15px;
-    border-top: 1px dashed var(--gris-medio);
-}
-
 .cart-total-box { 
     display: flex; 
     justify-content: space-between; 
-    font-size: 1.3rem; 
-    font-weight: 900; 
-    margin-bottom: 15px; 
-    color: var(--blanco); 
-    width: 100%; 
+    align-items: center;
+    margin-bottom: 20px; 
 }
-.btn-whatsapp { width: 100%; padding: 12px; background: #25D366; color: white; border: none; font-size: 1rem; font-weight: 900; border-radius: 5px; cursor: pointer; transition: 0.3s; text-transform: uppercase; display: block; }
-.btn-whatsapp:hover { background: #1ebc5a; }
-.btn-whatsapp:disabled { background: var(--gris-medio); color: #777; cursor: not-allowed; }
+.cart-total-box span:first-child { font-weight: 800; font-size: 1.2rem; color: var(--gris-texto); letter-spacing: 1px; }
+.cart-total-box span:last-child { font-family: var(--fuente-titulo); font-size: 2rem; color: var(--blanco); }
 
+.btn-confirmar { 
+    width: 100%; 
+    padding: 18px; 
+    background: var(--primario); 
+    color: var(--negro-puro); 
+    border: none; 
+    font-weight: 900; 
+    font-size: 1.1rem; 
+    border-radius: 8px; 
+    cursor: pointer; 
+    transition: 0.3s; 
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    gap: 10px;
+}
+.btn-confirmar:hover { background: var(--blanco); }
+.btn-confirmar:disabled { background: var(--gris-medio); color: #777; cursor: not-allowed; }
 
 /* TOAST NOTIFICACIÓN */
-.toast-notification { position: fixed; bottom: -100px; left: 50%; transform: translateX(-50%); background: var(--primario); color: var(--negro-puro); padding: 12px 25px; border-radius: 50px; font-weight: 800; box-shadow: 0 5px 15px rgba(0,0,0,0.5); z-index: 2000; transition: bottom 0.4s ease; text-transform: uppercase; font-size: 0.85rem; }
+.toast-notification { position: fixed; bottom: -100px; left: 50%; transform: translateX(-50%); background: var(--primario); color: var(--negro-puro); padding: 15px 30px; border-radius: 50px; font-weight: 800; box-shadow: 0 5px 15px rgba(0,0,0,0.5); z-index: 2000; transition: bottom 0.4s ease; text-transform: uppercase; font-size: 0.9rem; }
 .toast-notification.show { bottom: 30px; }
 .no-scroll { overflow: hidden; }
 
-/* =========================================================================
-   MEDIA QUERIES - RESPONSIVIDAD (MÓVILES Y TABLETS)
-   ========================================================================= */
-
+/* MEDIA QUERIES */
 @media (max-width: 1024px) { 
     .productos-grid { grid-template-columns: repeat(2, 1fr); } 
 }
 
 @media (max-width: 768px) {
-    /* Ajustes generales de texto y catálogo (Achicados) */
-    .landing-title .linea-blanca { font-size: clamp(1.2rem, 4vw, 2rem); }
-    .landing-title .linea-naranja { font-size: clamp(2rem, 8vw, 4.5rem); margin: 10px 0; }
-    .section-title { font-size: 1.8rem; margin-bottom: 30px; }
-    .categoria-separador { font-size: 1.1rem; margin: 25px 0 15px; }
+    .section-title { font-size: 2.2rem; }
+    .categoria-separador { font-size: 1.3rem; margin: 30px 0 15px; }
     
-    .productos-grid { display: flex; flex-direction: column; gap: 12px; }
-    .product-card { flex-direction: row; align-items: center; padding: 8px; min-height: 120px; }
-    .product-img { width: 90px; height: 90px; min-width: 90px; border-radius: 6px; }
-    .product-info { padding: 0 0 0 10px; justify-content: center; }
-    .product-title { font-size: 0.95rem; margin-bottom: 3px; }
-    .product-desc { font-size: 0.75rem; margin-bottom: 5px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
-    .size-selector { padding: 5px; font-size: 0.75rem; margin-bottom: 5px; }
-    .btn-add { padding: 7px; font-size: 0.75rem; }
+    .productos-grid { display: flex; flex-direction: column; gap: 15px; }
+    .product-card { flex-direction: row; align-items: center; padding: 10px; min-height: 140px; }
+    .product-img { width: 110px; height: 110px; min-width: 110px; border-radius: 8px; }
+    .product-info { padding: 0 0 0 15px; justify-content: center; }
+    .product-title { font-size: 1.1rem; margin-bottom: 5px; line-height: 1.2; }
+    .product-desc { font-size: 0.8rem; margin-bottom: 8px; line-height: 1.3; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+    .size-selector { padding: 6px; font-size: 0.85rem; margin-bottom: 8px; }
+    .btn-add { padding: 8px; font-size: 0.85rem; }
 
-    /* RESET DEL CARRITO PARA CELULARES (Columna única optimizada) */
-    .cart-sidebar {
-        display: flex;
-        flex-direction: column;
-    }
-    .cart-header { padding: 15px; }
-    .cart-header h2 { font-size: 1.2rem; }
-    
-    /* El body scrollea si hay muchas hamburguesas */
-    .cart-body { 
-        padding: 15px; 
-        flex-grow: 1;
-        overflow-y: auto;
-    }
-    
-    .cart-item { padding: 10px 15px; margin-bottom: 10px; }
-    .item-details h4 { font-size: 0.9rem; }
-    .item-details p { font-size: 0.85rem; }
-
-    /* Footer más compacto y restringido en altura */
-    .cart-footer { 
-        padding: 15px; 
-        border-left: none; 
-        border-top: 1px solid var(--gris-medio);
-        flex-shrink: 0; 
-        max-height: 55vh; /* Ocupa máximo un poco más de la mitad de la pantalla */
-    }
-    
-    .form-group { margin-bottom: 10px; }
-    .form-group label, .cart-notes label { font-size: 0.75rem; margin-bottom: 4px; }
-    .form-group select, .form-group input, .cart-notes textarea { padding: 8px; font-size: 0.8rem; }
-    .cart-notes textarea { min-height: 40px; }
-
-    .cart-checkout-fixed {
-        padding-top: 10px;
-        margin-top: 5px;
-    }
-    
-    .cart-total-box { margin-bottom: 10px; font-size: 1.15rem; }
-    .btn-whatsapp { padding: 12px; font-size: 0.9rem; }
+    .cart-sidebar { width: 100%; }
+    .cart-footer-fixed { padding: 20px; }
 }

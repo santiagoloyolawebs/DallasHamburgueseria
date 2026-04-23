@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confirmar Pedido | Dallas</title>
+    <link rel="icon" href="assets/logo.png" type="image/png">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Montserrat:wght@400;600;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .resumen-container { max-width: 600px; margin: 120px auto 50px; padding: 20px; }
+        .resumen-card { background: var(--gris-oscuro); padding: 30px; border-radius: 15px; border: 1px solid var(--gris-medio); }
+        .resumen-card h1 { font-family: var(--fuente-titulo); color: var(--primario); margin-bottom: 25px; font-size: 1.8rem; text-align: center; }
+        .resumen-item { display: flex; justify-content: space-between; margin-bottom: 15px; border-bottom: 1px solid #333; padding-bottom: 10px; font-size: 1rem; color: var(--blanco); }
+        .resumen-total { font-size: 1.8rem; font-weight: 900; color: var(--blanco); text-align: right; margin-top: 20px; border-top: 2px solid var(--primario); padding-top: 15px; }
+        .form-resumen { margin-top: 40px; }
+        .form-resumen label { display: block; margin-bottom: 8px; font-weight: 800; font-size: 0.85rem; color: var(--primario); }
+        .form-resumen input, .form-resumen select, .form-resumen textarea { width: 100%; padding: 15px; background: var(--negro-suave); border: 1px solid var(--gris-medio); color: white; border-radius: 8px; margin-bottom: 25px; font-family: inherit; font-size: 1rem;}
+        .form-resumen textarea { min-height: 80px; resize: vertical; }
+        .form-resumen input:focus, .form-resumen select:focus, .form-resumen textarea:focus { border-color: var(--primario); outline: none; }
+        .btn-finalizar { width: 100%; padding: 20px; background: #25D366; color: white; border: none; border-radius: 10px; font-weight: 900; font-size: 1.2rem; cursor: pointer; display: flex; justify-content: center; align-items: center; gap: 10px; transition: 0.3s; text-transform: uppercase; }
+        .btn-finalizar:hover { background: #1ebc5a; transform: translateY(-3px); }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" style="color:white; text-decoration:none; font-weight:800; font-size:1.1rem;"><i class="fa-solid fa-chevron-left"></i> VOLVER</a>
+            <img src="assets/logo.png" alt="Dallas Logo" height="50" onerror="this.style.display='none'">
+            <div style="width: 80px;"></div> </div>
+    </nav>
+
+    <div class="resumen-container">
+        <div class="resumen-card">
+            <h1>DETALLE DE TU PEDIDO</h1>
+            <div id="lista-resumen"></div>
+            <div class="resumen-total" id="total-resumen">$0</div>
+
+            <div class="form-resumen">
+                <label>MÉTODO DE PAGO</label>
+                <select id="pago">
+                    <option value="Efectivo">Efectivo</option>
+                    <option value="Transferencia / Mercado Pago">Transferencia / Mercado Pago</option>
+                </select>
+
+                <label>ENTREGA</label>
+                <select id="entrega" onchange="toggleDireccion()">
+                    <option value="Delivery">Delivery</option>
+                    <option value="Retiro en local">Retiro en local</option>
+                </select>
+
+                <div id="div-dir">
+                    <label>DIRECCIÓN DE ENVÍO</label>
+                    <input type="text" id="direccion" placeholder="Ej: Av. Tambor de Tacuarí 3826">
+                </div>
+
+                <label>ACLARACIONES ADICIONALES (Opcional)</label>
+                <textarea id="notas" placeholder="Ej: Sin pepinillos, pago con billete de $10.000..."></textarea>
+
+                <button class="btn-finalizar" onclick="enviarWhatsApp()">
+                    <i class="fa-brands fa-whatsapp"></i> ENVIAR PEDIDO
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const numeroWhatsapp = "5493765242100";
+        const datos = JSON.parse(localStorage.getItem('carrito_dallas')) || [];
+        const lista = document.getElementById('lista-resumen');
+        let total = 0;
+
+        // Si entran directo sin cargar el carrito, los mandamos al inicio
+        if (datos.length === 0) {
+            window.location.href = 'index.html';
+        }
+
+        datos.forEach(item => {
+            total += item.precio;
+            lista.innerHTML += `
+                <div class="resumen-item">
+                    <span>${item.nombre}</span>
+                    <span style="color:var(--primario); font-weight:bold;">$${item.precio.toLocaleString('es-AR')}</span>
+                </div>`;
+        });
+        document.getElementById('total-resumen').innerText = "$" + total.toLocaleString('es-AR');
+
+        function toggleDireccion() {
+            const entrega = document.getElementById('entrega').value;
+            document.getElementById('div-dir').style.display = entrega === 'Delivery' ? 'block' : 'none';
+        }
+
+        function enviarWhatsApp() {
+            let msg = "🍔 *NUEVO PEDIDO - DALLAS HAMBURGUESERÍA* 🍔\n\n";
+            
+            datos.forEach(i => {
+                msg += `• ${i.nombre}: $${i.precio.toLocaleString('es-AR')}\n`;
+            });
+            
+            msg += `\n*TOTAL: $${total.toLocaleString('es-AR')}*`;
+            msg += `\n\n*Medio de Pago:* ${document.getElementById('pago').value}`;
+            
+            const tipoEntrega = document.getElementById('entrega').value;
+            msg += `\n*Entrega:* ${tipoEntrega}`;
+            
+            if (tipoEntrega === 'Delivery') {
+                const dir = document.getElementById('direccion').value;
+                if (dir.trim() !== '') {
+                    msg += `\n*Dirección:* ${dir}`;
+                } else {
+                    alert('Por favor ingresa una dirección de envío');
+                    document.getElementById('direccion').focus();
+                    return;
+                }
+            }
+
+            const notas = document.getElementById('notas').value;
+            if (notas.trim() !== '') {
+                msg += `\n*Aclaraciones:* ${notas}`;
+            }
+
+            msg += "\n\n_Pedido generado desde la web_";
+
+            // Limpiar carrito después de enviar
+            localStorage.removeItem('carrito_dallas');
+
+            const url = `https://wa.me/${numeroWhatsapp}?text=${encodeURIComponent(msg)}`;
+            window.open(url, '_blank');
+            window.location.href = 'index.html'; // Lo regresamos al inicio tras enviar
+        }
+    </script>
+</body>
+</html>
