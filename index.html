@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dallas Hamburguesería | Posadas</title>
+    <link rel="icon" href="assets/logo.png" type="image/png">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Montserrat:wght@400;600;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <img src="assets/logo.png" alt="Dallas Logo" class="logo-img">
+            </div>
+            <button class="cart-toggle-btn" id="btn-abrir-carrito">
+                <i class="fa-solid fa-cart-shopping"></i>
+                <span id="cart-counter" class="cart-counter">0</span>
+            </button>
+        </div>
+    </nav>
+
+    <div class="cart-overlay" id="cart-overlay"></div>
+    <aside class="cart-sidebar" id="cart-sidebar">
+        <div class="cart-header">
+            <h2>TU PEDIDO</h2>
+            <button class="close-cart-btn" id="btn-cerrar-carrito"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <div class="cart-body">
+            <ul id="lista-carrito" class="cart-list"></ul>
+        </div>
+        <div class="cart-footer">
+            <div class="cart-options">
+                <div class="form-group">
+                    <label for="metodo-pago">Método de pago:</label>
+                    <select id="metodo-pago">
+                        <option value="Efectivo">Efectivo</option>
+                        <option value="Transferencia">Transferencia / Mercado Pago</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="metodo-entrega">Entrega:</label>
+                    <select id="metodo-entrega" onchange="toggleDireccion()">
+                        <option value="Delivery">Delivery (25-50 min)</option>
+                        <option value="Retiro por local">Para llevar / Retiro en local</option>
+                    </select>
+                </div>
+                <div class="form-group" id="grupo-direccion">
+                    <label for="direccion-envio">Dirección de envío:</label>
+                    <input type="text" id="direccion-envio" placeholder="Ej: Av. Tambor de Tacuarí 3826">
+                </div>
+            </div>
+            <div class="cart-notes">
+                <label for="pedido-notas">Aclaraciones adicionales:</label>
+                <textarea id="pedido-notas" placeholder="Ej: Sin pepinillos..."></textarea>
+            </div>
+            <div class="cart-total-box">
+                <span>Total:</span>
+                <span id="precio-total">$0</span>
+            </div>
+            <button id="btn-whatsapp" class="btn-whatsapp" disabled>Enviar Pedido a WhatsApp</button>
+        </div>
+    </aside>
+
+    <div class="main-content-wrapper">
+        <header class="hero">
+            <div class="hero-content">
+                <h1 class="landing-title">
+                    <span class="linea-blanca">LA MEJOR</span>
+                    <span class="linea-naranja">HAMBURGUESA</span>
+                    <span class="linea-blanca">DE POSADAS</span>
+                </h1>
+                <a href="#menu-seccion" class="btn-hero">Ver el Menú</a>
+            </div>
+        </header>
+
+        <main class="menu-container" id="menu-seccion">
+            <h2 class="section-title">NUESTRO <span class="highlight">MENÚ</span></h2>
+            <div id="productos-contenedor" class="productos-grid"></div>
+        </main>
+
+        <footer class="site-footer">
+            <div class="footer-grid">
+                <div class="footer-column">
+                    <h3><i class="fa-solid fa-map-location-dot"></i> UBICACIÓN</h3>
+                    <p>Av. Tambor de Tacuarí 3826, Posadas, Misiones</p>
+                </div>
+                <div class="footer-column">
+                    <h3><i class="fa-solid fa-clock"></i> HORARIOS</h3>
+                    <p>Mar a Jue: 20:00-23:45 | Vie a Dom: 20:00-00:00</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <a href="https://instagram.com/" target="_blank" class="btn-instagram"><i class="fa-brands fa-instagram"></i></a>
+                <p class="copy">&copy; 2024 Dallas Hamburguesería.</p>
+            </div>
+        </footer>
+    </div>
+
+    <div id="notificacion" class="toast-notification">¡Agregado al pedido!</div>
+    <script src="app.js"></script>
+</body>
+</html>
